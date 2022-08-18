@@ -1,2 +1,2 @@
 # Snippets
-My python snippets !
+My python snippets!
