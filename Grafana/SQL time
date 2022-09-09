@@ -1,0 +1,10 @@
+--SELECT FROM_UNIXTIME(${idn:raw}) AS 'date_view'
+--SELECT FROM_UNIXTIME(${__from:date:seconds} - ${__from:date:seconds} % (3 * 60) + (3 * 60 * ${id})) AS 'date_view'
+
+
+with id =
+SELECT id FROM
+(SELECT  cumulative_sum(first(var)) as id, first(count) as count FROM
+(SELECT (first(temperature_track) * 0 + 1) as var, count($effort) as count FROM ds1111.autogen.Aggregate3mMeasurement WHERE "NODE_INSTANCE" =~ /^$drive_MOBYDIC$/ GROUP BY time(3m))
+WHERE $timeFilter GROUP BY time(3m))
+WHERE count > 0
